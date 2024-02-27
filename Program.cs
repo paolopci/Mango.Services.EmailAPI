@@ -1,4 +1,6 @@
 using Mango.Services.EmailAPI.Data;
+using Mango.Services.EmailAPI.Extension;
+using Mango.Services.EmailAPI.Messaging;
 using Microsoft.EntityFrameworkCore;
 
 
@@ -11,6 +13,8 @@ builder.Services.AddDbContext<AppDbContext>(option =>
     option.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
 
+// Singleton xchè non voliammo un nuovo oggetto per differenti richieste.
+builder.Services.AddSingleton<IAzureServiceBusConsumer, AzureServiceBusConsumer>();
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -31,6 +35,7 @@ app.UseAuthorization();
 
 app.MapControllers();
 ApplyMigration();
+app.UseAzureServiceBusConsumer();
 app.Run();
 
 void ApplyMigration()
