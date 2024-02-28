@@ -10,8 +10,7 @@
         public double CartTotal { get; set; }
 
         // per messagebus Azure
-        public string? FirstName { get; set; }
-        public string? LastName { get; set; }
+        public string? Name { get; set; }
         public string? Phone { get; set; }
         public string? Email { get; set; }
     }
